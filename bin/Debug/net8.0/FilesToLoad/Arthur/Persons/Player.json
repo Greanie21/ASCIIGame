@@ -1,0 +1,62 @@
+[
+  {
+    "person": {
+      "personName": "Arthur",
+      "mapName": "Celadon",
+      "mapCoordinatesX": 28,
+      "mapCoordinatesY": 14,
+      "spirits": [
+        [
+          "Espirito",
+          "0",
+          3,
+          209,
+          98,
+          103,
+          60,
+          50,
+          64,
+          63,
+          14,
+          100,
+          100,
+          [
+            [
+              "Punch",
+              75,
+              100,
+              "Water",
+              false
+            ],
+            [
+              "Punch",
+              75,
+              100,
+              "Water",
+              false
+            ],
+            [
+              "Punch",
+              75,
+              100,
+              "Water",
+              false
+            ],
+            [
+              "Punch",
+              75,
+              100,
+              "Water",
+              false
+            ]
+          ]
+        ]
+      ],
+      "soulStones": 0,
+      "lesserHpRestores": 0,
+      "hpRestores": 0,
+      "greaterHpRestores": 0,
+      "ultimateHpRestores": 0
+    }
+  }
+]

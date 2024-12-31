@@ -24,8 +24,8 @@ public class TxtReader
     public static char[][] ReadMap(String fileName)
     {
         // pass the path to the file as a parameter 
-        string filePath = Path.Combine(Environment.CurrentDirectory, "\\FilesToLoad\\Maps\\" + fileName + ".txt");
-
+        string filePath = Path.Combine(Environment.CurrentDirectory, "FilesToLoad","Maps" , fileName + ".txt");
+    
         List<String> list = new List<String>();
         try
         {
@@ -64,7 +64,7 @@ public class TxtReader
     public static char[][] ReadVisualMap(String fileName)
     {
         // pass the path to the file as a parameter 
-        string filePath = Path.Combine(Environment.CurrentDirectory, "\\FilesToLoad\\Maps\\Visuals\\" + fileName + ".txt");
+        string filePath = Path.Combine(Environment.CurrentDirectory, "FilesToLoad","Maps","Visuals",  fileName + ".txt");
 
 
         //read the txt
