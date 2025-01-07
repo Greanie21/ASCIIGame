@@ -101,8 +101,9 @@ public class Util
 
     public static void ClearBoard()
     {
-        for (int i = 0; i < 100; ++i)
-            Console.WriteLine();
+        Console.Clear();
+        //for (int i = 0; i < 100; ++i)
+        //    Console.WriteLine();
     }
 
     private static bool PlayerIsNearThisPartOfTheMap(int xCoordinate, int yCoordinate, Person player)
@@ -194,4 +195,11 @@ public class Util
             return string.Empty;
         }
     }
+
+    public static int GetXpToAdd(int opponentLvl)
+    {
+        return (14 * (opponentLvl + 2)) + (((3 * opponentLvl) * (3 * opponentLvl)) / 5);
+    }
+
+
 }

@@ -2,7 +2,7 @@
 public class InventoryManager
 {
 
-    public static void UseInventory(Person person, Spirit foe, int hudSize, bool isNpc)
+    public static void UseInventory(Person person, Spirit? foe, int hudSize, bool isNpc)
     {
         int choice;
         Random randomNumber = new Random();
@@ -99,7 +99,7 @@ public class InventoryManager
         Console.WriteLine(lastLine);
     }
 
-    private static bool InventoryChoiceIsValid(int choice, Person person, Spirit foe, bool isNpc)
+    private static bool InventoryChoiceIsValid(int choice, Person person, Spirit? foe, bool isNpc)
     {
         switch (choice)
         {
@@ -177,7 +177,7 @@ public class InventoryManager
         }
     }
 
-    private static void UseItem(Person person, int choice, Spirit foe)
+    private static void UseItem(Person person, int choice, Spirit? foe)
     {
         int restoreQuantity;
         int hpCurrent = person.spirits[0].getHP()[0];
@@ -185,6 +185,11 @@ public class InventoryManager
         switch (choice)
         {
             case 1:
+                if (foe==null)
+                {
+                    throw new ArgumentNullException(nameof(foe));
+                }
+
                 person.soulStones--;
                 int newSpiritPosition = person.GetSpiritsCount();
                 foe.setHP(0, 0);

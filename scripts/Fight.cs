@@ -482,7 +482,7 @@ public class FightClass
         } while (canCancel == false);
     }
 
-  
+
 
 
     private void PrintChangeSpiritOptions()
@@ -1074,13 +1074,13 @@ public class FightClass
 
         //Add xp to the spirit that won (100% of the loser lvl)
         int lvl = defender.getLevel();
-        int xpToAddWin = (14 * (lvl + 2)) + (((3 * lvl) * (3 * lvl)) / 5);
+        int xpToAddWin = Util.GetXpToAdd(lvl);
         attacker.experience += xpToAddWin;
 
         //Add xp to the spirit that lost (5% of the winner lvl)
         lvl = attacker.getLevel();
-        float xpToAddLoss = (14 * (lvl + 2)) + (((3 * lvl) * (3 * lvl)) / 5);
-        xpToAddLoss *= 0.05f;
+        float xpToAddLoss = Util.GetXpToAdd(lvl) * 0.05f;
+
         int xpToAddLossInt = (int)Math.Round(xpToAddLoss);
         defender.experience += xpToAddLossInt;
 
@@ -1100,6 +1100,8 @@ public class FightClass
             PrintLvlUp();
         }
     }
+
+   
 
     private void ResetStacks(Person person)
     {

@@ -6,7 +6,7 @@ public class PkmnGame
      */
     static char[][] map;
     static char[][] visualMap;
-    static bool mapIsVisualMode = true;
+    static bool mapIsVisualMode = false;
 
     static PlayerDetails playerDetails;
     static Person[] npcs;
@@ -146,7 +146,9 @@ public class PkmnGame
 
         while (gameIsFinished == false)
         {
-            if (PlayerActionIsValid(Util.ReadUserNextKeyString()) == false)
+            string? playerAction = Console.ReadLine();
+
+            if (PlayerActionIsValid(playerAction) == false)
             {
                 Console.WriteLine("Please input an valid action");
                 Console.WriteLine("Type /help for the valid commands list");
@@ -154,8 +156,13 @@ public class PkmnGame
         }
     }
 
-    static bool PlayerActionIsValid(string movement)
+    static bool PlayerActionIsValid(string? movement)
     {
+        if(movement == null)
+        {
+            return false;
+        }
+
         int newX = playerDetails.player.mapPosition[0];
         int newY = playerDetails.player.mapPosition[1];
         switch (movement.ToLower())
@@ -236,20 +243,19 @@ public class PkmnGame
     static bool MapTilesEvents(int newX, int newY)
     {
         char mapTile = map[newX][newY];
-        if (mapTile == '*')
+
+        switch (mapTile)
         {
-            Move(newX, newY);
-            return true;
-        }
-        if (mapTile == 'W')
-        {
-            Move(newX, newY);
-            StepOnTallGrass();
-            return true;
-        }
-        if (mapTile == '#')
-        {
-            return false;
+            case '*':
+                Move(newX, newY);
+                return true;
+            case 'W':
+                Move(newX, newY);
+                StepOnTallGrass();
+                return true;
+            case '#':
+                return false;
+
         }
 
         String mapName = playerDetails.player.mapName;
@@ -615,7 +621,8 @@ public class PkmnGame
         for (int i = 0; i < person.GetSpiritsCount(); i++)
         {
             int lvl = person.spirits[i].getLevel();
-            int xpWon = ((lvl + 2) * 14 + (((3 * lvl) * (3 * lvl)) / 3));
+
+            int xpWon = Util.GetXpToAdd(lvl);
 
             person.spirits[i].experience += xpWon;
             person.spirits[i].CheckIfSpiritLeveledUp();
