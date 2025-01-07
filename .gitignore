@@ -398,3 +398,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/bin/Debug/net8.0/Newtonsoft.Json.dll
+/bin/Debug/net8.0/torneio-dos-spiritos.deps.json
+/bin/Debug/net8.0/torneio-dos-spiritos.dll
+/bin/Debug/net8.0/torneio-dos-spiritos.exe
+/bin/Debug/net8.0/torneio-dos-spiritos.runtimeconfig.json
