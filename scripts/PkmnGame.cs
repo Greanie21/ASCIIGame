@@ -146,19 +146,31 @@ public class PkmnGame
 
         while (gameIsFinished == false)
         {
-            string? playerAction = Console.ReadLine();
+            char keyChar = Console.ReadKey().KeyChar;
 
-            if (PlayerActionIsValid(playerAction) == false)
+            switch (keyChar)
             {
-                Console.WriteLine("Please input an valid action");
-                Console.WriteLine("Type /help for the valid commands list");
+                case 'w':
+                case 'a':
+                case 's':
+                case 'd':
+                    PlayerActionIsValid(keyChar.ToString());
+                    break;
+                case '/':
+                    PlayerActionIsValid("/help");
+                    PlayerActionIsValid(Console.ReadLine());
+                    break;
+                default:
+                    Console.WriteLine("Please input an valid action");
+                    Console.WriteLine("Type /help for the valid commands list");
+                    break;
             }
         }
     }
 
     static bool PlayerActionIsValid(string? movement)
     {
-        if(movement == null)
+        if (movement == null)
         {
             return false;
         }
@@ -195,6 +207,7 @@ public class PkmnGame
                     return false;
                 }
                 break;
+            case "help":
             case "/help":
                 Console.WriteLine("w -> move North (Up)");
                 Console.WriteLine("a -> move West  (Left)");
