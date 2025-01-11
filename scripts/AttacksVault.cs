@@ -19,11 +19,11 @@ public class AttacksVault
     }
 
 
-    public static SpiritAttack GetAttack(String element, bool isPhysical, int power)
+    public static SpiritAttack GetAttack(Element.Type element, bool isPhysical, int power)
     {
         switch (element)
         {
-            case "Water":
+            case Element.Type.Water:
                 if (isPhysical)
                 {
                     if (power == 1)
@@ -50,7 +50,7 @@ public class AttacksVault
                         return GetAttack("Flood");
                     }
                 }
-            case "Earth":
+            case Element.Type.Earth:
                 if (isPhysical)
                 {
                     if (power == 1)
@@ -77,7 +77,7 @@ public class AttacksVault
                         return GetAttack("Tectonic Shake");
                     }
                 }
-            case "Fire":
+            case Element.Type.Fire:
                 if (isPhysical)
                 {
                     if (power == 1)
@@ -104,6 +104,7 @@ public class AttacksVault
                         return GetAttack("Blaze Bomb");
                     }
                 }
+            case Element.Type.Air:
             default:
                 if (isPhysical)
                 {

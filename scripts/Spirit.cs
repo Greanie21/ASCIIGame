@@ -4,6 +4,7 @@ public class Spirit
     public Element.Type element;
     private int level;
     public int experience = 1;
+    public Archtype.Type archtype;
 
     private int[] healthPoints = new int[2];
     private int[] attack = new int[2];
@@ -24,7 +25,7 @@ public class Spirit
             int maxDef, int maxMagicDef,
             int maxSpd,
             int maxAccuracy, int maxDodge,
-            String spiritName, String type,
+            String spiritName, Element.Type type, Archtype.Type archtype,
             SpiritAttack[] atks)
     {
         level = lvl;
@@ -49,12 +50,13 @@ public class Spirit
         attacks = atks;
 
 
-        element = switchElement(type);
+        element = type;
+        this.archtype = archtype;
     }
 
     public Spirit(int[] stats, String spiritName, Element.Type element, SpiritAttack[] atks)
     {
-      
+
         level = stats[0];
         experience = stats[1];
         healthPoints[0] = stats[2];
@@ -77,24 +79,11 @@ public class Spirit
         attacks = atks;
 
 
-        element = element;
+        this.element = element;
+        archtype = Archtype.Type.Balanced;
     }
 
-    private Element.Type switchElement(string type)
-    {
-        switch (type)
-        {
-            case "Water":
-                return Element.Type.Water;
-            case "Earth":
-                return Element.Type.Earth;
-            case "Fire":
-                return Element.Type.Fire;
-            case "Air":
-            default:
-                return Element.Type.Air;
-        }
-    }
+
     /**
      * @return the level
      */
@@ -211,54 +200,51 @@ public class Spirit
     {
         setLevel(getLevel() + 1);
 
-        int[] statsInc;//atk,def,hp,atkM,defM,spd
-        //base stats up per lvl for each element
-        switch (element)
-        {
-            case Element.Type.Water:
-                statsInc = new int[] { 5, 3, 1, 4, 6, 2 };
-                break;
-            case Element.Type.Fire:
-                statsInc = new int[] { 4, 1, 2, 6, 5, 3 };
-                break;
-            case Element.Type.Earth:
-                statsInc = new int[] { 3, 5, 6, 2, 4, 1 };
-                break;
-            case Element.Type.Air:
-                statsInc = new int[] { 3, 3, 3, 3, 3, 6 };
-                break;
-            default:
-                statsInc = new int[] { 6, 6, 6, 6, 6, 6 };
-                break;
-        }
+        GrowthRate rate = SpiritGrowthRate();
 
+        float newAttack1 = getAttack()[0] * rate.attack / 100.0f;
+        float newAttack2 = getAttack()[1] * rate.attack / 100.0f;
+        setAttack(0, (int)MathF.Round(newAttack1));
+        setAttack(1, (int)MathF.Round(newAttack2));
 
-        //bonus in one of the stats
-        Random random = new Random();
-        statsInc[random.Next(0, 7)]++;
+        float newDefense1 = getDefense()[0] * rate.defense / 100.0f;
+        float newDefense2 = getDefense()[1] * rate.defense / 100.0f;
+        setDefense(0, (int)MathF.Round(newDefense1));
+        setDefense(1, (int)MathF.Round(newDefense2));
 
-        //set the stats increments
-        setAttack(0, getAttack()[0] + statsInc[0]);
-        setAttack(1, getAttack()[1] + statsInc[0]);
-
-        setDefense(0, getDefense()[0] + statsInc[1]);
-        setDefense(1, getDefense()[1] + statsInc[1]);
-
-        //just increase the hp if the spirit is not fainted
+        float newHP1 = getHP()[0] * rate.healthPoints / 100.0f;
+        float newHP2 = getHP()[1] * rate.healthPoints / 100.0f;
         if (getHP()[0] > 0)
         {
-            setHP(0, getHP()[0] + statsInc[2]);
+            setHP(0, (int)MathF.Round(newHP1));
         }
-        setHP(1, getHP()[1] + statsInc[2]);
+        setHP(1, (int)MathF.Round(newHP2));
 
-        setMagicAttack(0, getMagicAttack()[0] + statsInc[3]);
-        setDefense(1, getDefense()[1] + statsInc[3]);
+        float newMagicAttack1 = getMagicAttack()[0] * rate.magicAttack / 100.0f;
+        float newMagicAttack2 = getMagicAttack()[1] * rate.magicAttack / 100.0f;
+        setMagicAttack(0, (int)MathF.Round(newMagicAttack1));
+        setMagicAttack(1, (int)MathF.Round(newMagicAttack2));
 
-        setMagicDefense(0, getMagicDefense()[0] + statsInc[4]);
-        setMagicDefense(1, getMagicDefense()[1] + statsInc[4]);
+        float newMagicDefense1 = getMagicDefense()[0] * rate.magicDefense / 100.0f;
+        float newMagicDefense2 = getMagicDefense()[1] * rate.magicDefense / 100.0f;
+        setMagicDefense(0, (int)MathF.Round(newMagicDefense1));
+        setMagicDefense(1, (int)MathF.Round(newMagicDefense2));
 
-        setSpeed(0, getSpeed()[0] + statsInc[5]);
-        setSpeed(1, getSpeed()[1] + statsInc[5]);
+        float newSpeed1 = getSpeed()[0] * rate.speed / 100.0f;
+        float newSpeed2 = getSpeed()[1] * rate.speed / 100.0f;
+        setSpeed(0, (int)MathF.Round(newSpeed1));
+        setSpeed(1, (int)MathF.Round(newSpeed2));
+
+        float newAccuracy1 = accuracy[0] * rate.accuracy / 100.0f;
+        float newAccuracy2 = accuracy[1] * rate.accuracy / 100.0f;
+        accuracy[0] = (int)MathF.Round(newAccuracy1);
+        accuracy[1] = (int)MathF.Round(newAccuracy2);
+
+        float newDodge1 = dodge[0] * rate.dodge / 100.0f;
+        float newDodge2 = dodge[1] * rate.dodge / 100.0f;
+        dodge[0] = (int)MathF.Round(newDodge1);
+        dodge[1] = (int)MathF.Round(newDodge2);
+
     }
 
     public bool CheckIfSpiritLeveledUp()
@@ -283,5 +269,117 @@ public class Spirit
             return true;
         }
         return false;
+    }
+
+    private GrowthRate SpiritGrowthRate()
+    {
+        GrowthRate rate = new GrowthRate();
+        GrowthRate rate1 = BaseGrowtRate();
+        GrowthRate rate2 = ElementGrowtRate(this.element);
+        GrowthRate rate3 = ArchtypeGrowtRate(this.archtype);
+
+        rate.healthPoints = rate1.healthPoints + rate2.healthPoints + rate3.healthPoints;
+        rate.attack = rate1.attack + rate2.attack + rate3.attack;
+        rate.magicAttack = rate1.magicAttack + rate2.magicAttack + rate3.magicAttack;
+        rate.defense = rate1.defense + rate2.defense + rate3.defense;
+        rate.magicDefense = rate1.magicDefense + rate2.magicDefense + rate3.magicDefense;
+        rate.speed = rate1.speed + rate2.speed + rate3.speed;
+        rate.accuracy = rate1.accuracy + rate2.accuracy + rate3.accuracy;
+        rate.dodge = rate1.dodge + rate2.dodge + rate3.dodge;
+
+        return rate;
+    }
+
+    private GrowthRate BaseGrowtRate()
+    {
+        GrowthRate rate = new GrowthRate();
+
+        rate.healthPoints = 15;
+        rate.attack = 12;
+        rate.magicAttack = 12;
+        rate.defense = 8;
+        rate.magicDefense = 8;
+        rate.speed = 5;
+        rate.accuracy = 5;
+        rate.dodge = 5;
+
+        return rate;
+    }
+
+    private GrowthRate ElementGrowtRate(Element.Type type)
+    {
+        GrowthRate rate = new GrowthRate();
+
+        switch (type)
+        {
+            case Element.Type.Water:
+                rate.magicAttack = 10;
+                rate.magicDefense = 10;
+                rate.dodge = 10;
+                rate.defense = -10;
+                break;
+            case Element.Type.Fire:
+                rate.attack = 10;
+                rate.magicAttack = 10;
+                rate.accuracy = 10;
+                rate.magicDefense = -10;
+                break;
+            case Element.Type.Earth:
+                rate.healthPoints = 10;
+                rate.defense = 10;
+                rate.magicDefense = 10;
+                rate.speed = -10;
+                break;
+            case Element.Type.Air:
+            default:
+                rate.speed = 10;
+                rate.accuracy = 10;
+                rate.dodge = 10;
+                rate.healthPoints = -10;
+                break;
+        }
+
+        return rate;
+    }
+
+    private GrowthRate ArchtypeGrowtRate(Archtype.Type type)
+    {
+        GrowthRate rate = new GrowthRate();
+        switch (type)
+        {
+            case Archtype.Type.GlassCannon:
+                rate.attack = 12;
+                rate.magicAttack = 12;
+                rate.speed = -8;
+                rate.accuracy = -8;
+                rate.dodge = -8;
+                break;
+            case Archtype.Type.Tank:
+                rate.healthPoints = 8;
+                rate.defense = 6;
+                rate.magicDefense = 6;
+                rate.speed = -10;
+                rate.magicAttack = -6;
+                rate.attack = -4;
+                break;
+            case Archtype.Type.Speedster:
+                rate.speed = 15;
+                rate.healthPoints = -3;
+                rate.attack = -3;
+                rate.magicAttack = -3;
+                rate.defense = -3;
+                rate.magicDefense = -3;
+                break;
+            case Archtype.Type.Powerhouse:
+                rate.attack = 15;
+                rate.magicAttack = 15;
+                rate.accuracy = -30;
+                break;
+            case Archtype.Type.Balanced:
+            default:
+                break;
+        }
+
+        return rate;
     }
 }
