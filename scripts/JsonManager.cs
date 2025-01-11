@@ -36,6 +36,7 @@ public class JsonManager
 
             spiritsInfArray.Add(person.spirits[i].name);
             spiritsInfArray.Add(person.spirits[i].element.ToString());
+            spiritsInfArray.Add(person.spirits[i].archtype.ToString());
             spiritsInfArray.Add(person.spirits[i].getLevel());
             spiritsInfArray.Add(person.spirits[i].experience);
             spiritsInfArray.Add(person.spirits[i].getHP()[0]);
@@ -197,6 +198,7 @@ public class JsonManager
             var spiritArray = (JArray)spiritsArray[i];
             string name = spiritArray[0].ToString();
             var element = Enum.Parse<Element.Type>(spiritArray[1].ToString());
+            var archtype = Enum.Parse<Archtype.Type>(spiritArray[2].ToString());
             int[] stats = new int[11];
             SpiritAttack[] attacks = new SpiritAttack[4];
 
@@ -224,7 +226,7 @@ public class JsonManager
                 }
             }
 
-            person.spirits[i] = new Spirit(stats, name, element, attacks);
+            person.spirits[i] = new Spirit(stats, name, element, archtype, attacks);
         }
 
         person.soulStones = personObject["soulStones"].ToObject<int>();

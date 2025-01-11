@@ -54,7 +54,7 @@ public class Spirit
         this.archtype = archtype;
     }
 
-    public Spirit(int[] stats, String spiritName, Element.Type element, SpiritAttack[] atks)
+    public Spirit(int[] stats, String spiritName, Element.Type element, Archtype.Type archtype, SpiritAttack[] atks)
     {
 
         level = stats[0];
@@ -80,7 +80,7 @@ public class Spirit
 
 
         this.element = element;
-        archtype = Archtype.Type.Balanced;
+        this.archtype = archtype;
     }
 
 

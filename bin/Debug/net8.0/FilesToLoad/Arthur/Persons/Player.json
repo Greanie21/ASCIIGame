@@ -3,12 +3,13 @@
     "person": {
       "personName": "Arthur",
       "mapName": "Celadon",
-      "mapCoordinatesX": 6,
+      "mapCoordinatesX": 9,
       "mapCoordinatesY": 24,
       "spirits": [
         [
           "Espirito",
           "0",
+          "Balanced",
           3,
           209,
           98,

@@ -1,7 +1,7 @@
 [
   {
     "person": {
-      "personName": "Inimigo",
+      "personName": "Inimigo 2",
       "mapName": "Pewter",
       "mapCoordinatesX": 0,
       "mapCoordinatesY": 0,
@@ -9,6 +9,7 @@
         [
           "Espirito M.",
           "0",
+          "Balanced",
           2,
           296,
           12,
